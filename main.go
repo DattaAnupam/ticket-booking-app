@@ -3,8 +3,9 @@ package main
 import "fmt"
 
 func main() {
-	var conferenceName string = "Go Conference"
 	const noOfTickets int = 50
+
+	var conferenceName string = "Go Conference"
 	var remaingTickets int = 50
 
 	fmt.Printf("Welcome to our %s booking application\n", conferenceName)
