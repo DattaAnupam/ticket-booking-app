@@ -19,27 +19,30 @@ func main() {
 	fmt.Printf("We have total of %d tickets and %d tickets are available\n", noOfTickets, remaingTickets)
 	fmt.Println("Get your tickets here to attend")
 
-	// take user input
-	fmt.Println("Enter First name")
-	fmt.Scanf("%s\n", &firstName)
+	for {
+		// take user input
+		fmt.Println("\nEnter First name")
+		fmt.Scanf("%s\n", &firstName)
 
-	fmt.Println("Enter Last name")
-	fmt.Scanf("%s\n", &lastName)
+		fmt.Println("Enter Last name")
+		fmt.Scanf("%s\n", &lastName)
 
-	fmt.Println("Enter email address")
-	fmt.Scanf("%s\n", &userEmail)
+		fmt.Println("Enter email address")
+		fmt.Scanf("%s\n", &userEmail)
 
-	fmt.Println("Enter number of tickets you want to book")
-	fmt.Scanf("%d\n", &userTickets)
+		fmt.Println("Enter number of tickets you want to book")
+		fmt.Scanf("%d\n", &userTickets)
 
-	// calculate remaining tickets after user booking
-	remaingTickets -= userTickets
+		// calculate remaining tickets after user booking
+		remaingTickets -= userTickets
 
-	attendee = firstName + " " + lastName
-	attendees = append(attendees, attendee)
+		attendee = firstName + " " + lastName
+		attendees = append(attendees, attendee)
 
-	fmt.Printf("Thank you %s for booking %d tickets. You will receive a notification email at %s", attendee, userTickets, userEmail)
+		fmt.Printf("Thank you %s for booking %d tickets. You will receive a notification email at %s", attendee, userTickets, userEmail)
 
-	fmt.Printf("\nNumber of Tickets Available are %d", remaingTickets)
-	fmt.Printf("\nList of current attendees %v", attendees)
+		fmt.Printf("\nNumber of Tickets Available are %d", remaingTickets)
+		fmt.Printf("\nList of current attendees %v", attendees)
+	}
+
 }
