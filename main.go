@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
 func main() {
@@ -42,7 +43,14 @@ func main() {
 		fmt.Printf("Thank you %s for booking %d tickets. You will receive a notification email at %s", attendee, userTickets, userEmail)
 
 		fmt.Printf("\nNumber of Tickets Available are %d", remaingTickets)
-		fmt.Printf("\nList of current attendees %v", attendees)
+
+		// use of for-each loop
+		firstNames := []string{}
+		for _, attendee := range attendees {
+			var names = strings.Fields(attendee) // spliting the full name from blank space
+			firstNames = append(firstNames, names[0])
+		}
+		fmt.Printf("\nThe first names of attendees are : %v", firstNames)
 	}
 
 }
