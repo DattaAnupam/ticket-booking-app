@@ -9,8 +9,9 @@ func main() {
 
 	var conferenceName string = "Go Conference"
 	var remaingTickets uint = 50 // uint - unsigned integer, only contains positive numbers. remaining tickets can't go beyond 0
-	var firstName, lastName, fullName, userEmail string
+	var firstName, lastName, attendee, userEmail string
 	var userTickets uint // uint - unsigned integer, only contains positive numbers. A user can't buy -1 nos tickets
+	var attendees [50]string
 
 	fmt.Printf("Welcome to our %s booking application\n", conferenceName)
 	fmt.Printf("We have total of %d tickets and %d tickets are available\n", noOfTickets, remaingTickets)
@@ -32,8 +33,10 @@ func main() {
 	// calculate remaining tickets after user booking
 	remaingTickets -= userTickets
 
-	fullName = firstName + " " + lastName
-	fmt.Printf("Thank you %s for booking %d tickets. You will receive a notification email at %s", fullName, userTickets, userEmail)
+	attendee = firstName + " " + lastName
+	attendees[0] = attendee
+
+	fmt.Printf("Thank you %s for booking %d tickets. You will receive a notification email at %s", attendee, userTickets, userEmail)
 
 	fmt.Printf("\nNumber of Tickets Available are %d", remaingTickets)
 }
