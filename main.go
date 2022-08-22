@@ -5,34 +5,37 @@ import (
 	"strings"
 )
 
-func main() {
-	const noOfTickets int = 50
+const noOfTickets int = 50
 
-	conferenceName := "Go Conference"
-	var remaingTickets uint = 50 // uint - unsigned integer, only contains positive numbers. remaining tickets can't go beyond 0
-	// var attendees []string
-	// Another way of declaring variable, not applicable for const
-	attendees := []string{}
+var conferenceName = "Go Conference"
+var remaingTickets uint = 50 // uint - unsigned integer, only contains positive numbers. remaining tickets can't go beyond 0
+// var attendees []string
+// Another way of declaring variable, not applicable for const
+var attendees = []string{}
+
+func main() {
+
 	var attendee string
 
-	greetUser(conferenceName, noOfTickets, remaingTickets)
+	// greet the user with conference basic details
+	greetUser()
 
 	for {
 		// take user input
 		firstName, lastName, userEmail, userTickets := getUserInputs()
 
 		// user input validation
-		isValidName, isValidEmail, isValidTicketNumber := validateUserInput(firstName, lastName, userEmail, userTickets, remaingTickets)
+		isValidName, isValidEmail, isValidTicketNumber := validateUserInput(firstName, lastName, userEmail, userTickets)
 
 		if isValidName && isValidEmail && isValidTicketNumber {
 			attendee = firstName + " " + lastName
 			// call book tickets
-			bookTicket(remaingTickets, userTickets, attendee, attendees, userEmail)
+			bookTicket(userTickets, attendee, userEmail)
 
 			attendees = append(attendees, attendee)
 
 			// print first names of attendees
-			printFirstNames(attendees)
+			printFirstNames()
 
 			// check whether we ran out of tickets
 			if remaingTickets == 0 {
@@ -55,14 +58,14 @@ func main() {
 }
 
 // Greets user with conference name, total no of tickets and remaining tickets for the conference
-func greetUser(conferenceName string, noOfTickets int, remaingTickets uint) {
+func greetUser() {
 	fmt.Printf("Welcome to our %s booking application\n", conferenceName)
 	fmt.Printf("We have total of %d tickets and %d tickets are available\n", noOfTickets, remaingTickets)
 	fmt.Println("Get your tickets here to attend")
 }
 
 // print first names of attendees
-func printFirstNames(attendees []string) {
+func printFirstNames() {
 	// use of for-each loop
 	firstNames := []string{}
 	for _, attendee := range attendees {
@@ -73,7 +76,7 @@ func printFirstNames(attendees []string) {
 }
 
 // validates inputs from the user
-func validateUserInput(firstName string, lastName string, userEmail string, userTickets uint, remaingTickets uint) (bool, bool, bool) {
+func validateUserInput(firstName string, lastName string, userEmail string, userTickets uint) (bool, bool, bool) {
 	// firstName & lastName should contain atleast  characters
 	isValidName := len(firstName) >= 2 && len(lastName) >= 2
 	// email should contain @ character
@@ -104,7 +107,7 @@ func getUserInputs() (string, string, string, uint) {
 	return firstName, lastName, userEmail, userTickets
 }
 
-func bookTicket(remaingTickets uint, userTickets uint, attendee string, attendees []string, userEmail string) {
+func bookTicket(userTickets uint, attendee string, userEmail string) {
 	// calculate remaining tickets after user booking
 	remaingTickets -= userTickets
 
