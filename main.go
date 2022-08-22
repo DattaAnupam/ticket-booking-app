@@ -19,11 +19,11 @@ func main() {
 	var attendee string
 
 	// greet the user with conference basic details
-	greetUser()
+	helper.GreetUser(conferenceName, noOfTickets, remaingTickets)
 
 	for {
 		// take user input
-		firstName, lastName, userEmail, userTickets := getUserInputs()
+		firstName, lastName, userEmail, userTickets := helper.GetUserInputs()
 
 		// user input validation
 		isValidName, isValidEmail, isValidTicketNumber := helper.ValidateUserInput(firstName, lastName, userEmail, userTickets, remaingTickets)
@@ -58,13 +58,6 @@ func main() {
 	}
 }
 
-// Greets user with conference name, total no of tickets and remaining tickets for the conference
-func greetUser() {
-	fmt.Printf("Welcome to our %s booking application\n", conferenceName)
-	fmt.Printf("We have total of %d tickets and %d tickets are available\n", noOfTickets, remaingTickets)
-	fmt.Println("Get your tickets here to attend")
-}
-
 // print first names of attendees
 func printFirstNames() {
 	// use of for-each loop
@@ -74,26 +67,6 @@ func printFirstNames() {
 		firstNames = append(firstNames, names[0])
 	}
 	fmt.Printf("\nThe first names of attendees are : %v", firstNames)
-}
-
-// takes user input
-func getUserInputs() (string, string, string, uint) {
-	var firstName, lastName, userEmail string
-	var userTickets uint // uint - unsigned integer, only contains positive numbers. A user can't buy -1 nos tickets
-
-	fmt.Println("\nEnter First name")
-	fmt.Scanf("%s\n", &firstName)
-
-	fmt.Println("Enter Last name")
-	fmt.Scanf("%s\n", &lastName)
-
-	fmt.Println("Enter email address")
-	fmt.Scanf("%s\n", &userEmail)
-
-	fmt.Println("Enter number of tickets you want to book")
-	fmt.Scanf("%d\n", &userTickets)
-
-	return firstName, lastName, userEmail, userTickets
 }
 
 func bookTicket(userTickets uint, attendee string, userEmail string) {
