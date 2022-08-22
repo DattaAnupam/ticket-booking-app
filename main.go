@@ -51,6 +51,12 @@ func main() {
 			firstNames = append(firstNames, names[0])
 		}
 		fmt.Printf("\nThe first names of attendees are : %v", firstNames)
-	}
 
+		// check whether we ran out of tickets
+		if remaingTickets == 0 {
+			// end program
+			fmt.Println("Our conference is booked out. Come back next year...")
+			break
+		}
+	}
 }
