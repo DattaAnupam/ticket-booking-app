@@ -8,47 +8,28 @@ import (
 func main() {
 	const noOfTickets int = 50
 
-	var conferenceName string = "Go Conference"
+	conferenceName := "Go Conference"
 	var remaingTickets uint = 50 // uint - unsigned integer, only contains positive numbers. remaining tickets can't go beyond 0
-	var firstName, lastName, attendee, userEmail string
-	var userTickets uint // uint - unsigned integer, only contains positive numbers. A user can't buy -1 nos tickets
 	// var attendees []string
 	// Another way of declaring variable, not applicable for const
 	attendees := []string{}
+	var attendee string
 
 	greetUser(conferenceName, noOfTickets, remaingTickets)
 
 	for {
 		// take user input
-		fmt.Println("\nEnter First name")
-		fmt.Scanf("%s\n", &firstName)
-
-		fmt.Println("Enter Last name")
-		fmt.Scanf("%s\n", &lastName)
-
-		fmt.Println("Enter email address")
-		fmt.Scanf("%s\n", &userEmail)
-
-		fmt.Println("Enter number of tickets you want to book")
-		fmt.Scanf("%d\n", &userTickets)
+		firstName, lastName, userEmail, userTickets := getUserInputs()
 
 		// user input validation
-		// firstName & lastName should contain atleast  characters
-		isValidName := len(firstName) >= 2 && len(lastName) >= 2
-		// email should contain @ character
-		isValidEmail := strings.Contains(userEmail, "@")
-		// user should book atleast 1 ticket and it should be less remainTickets
-		isValidTicketNumber := userTickets > 0 && userTickets <= remaingTickets
+		isValidName, isValidEmail, isValidTicketNumber := validateUserInput(firstName, lastName, userEmail, userTickets, remaingTickets)
 
 		if isValidName && isValidEmail && isValidTicketNumber {
-			// calculate remaining tickets after user booking
-			remaingTickets -= userTickets
-
 			attendee = firstName + " " + lastName
-			attendees = append(attendees, attendee)
+			// call book tickets
+			bookTicket(remaingTickets, userTickets, attendee, attendees, userEmail)
 
-			fmt.Printf("Thank you %s for booking %d tickets. You will receive a notification email at %s", attendee, userTickets, userEmail)
-			fmt.Printf("\nNumber of Tickets Available are %d", remaingTickets)
+			attendees = append(attendees, attendee)
 
 			// print first names of attendees
 			printFirstNames(attendees)
@@ -89,4 +70,44 @@ func printFirstNames(attendees []string) {
 		firstNames = append(firstNames, names[0])
 	}
 	fmt.Printf("\nThe first names of attendees are : %v", firstNames)
+}
+
+// validates inputs from the user
+func validateUserInput(firstName string, lastName string, userEmail string, userTickets uint, remaingTickets uint) (bool, bool, bool) {
+	// firstName & lastName should contain atleast  characters
+	isValidName := len(firstName) >= 2 && len(lastName) >= 2
+	// email should contain @ character
+	isValidEmail := strings.Contains(userEmail, "@")
+	// user should book atleast 1 ticket and it should be less remainTickets
+	isValidTicketNumber := userTickets > 0 && userTickets <= remaingTickets
+
+	return isValidName, isValidEmail, isValidTicketNumber
+}
+
+// takes user input
+func getUserInputs() (string, string, string, uint) {
+	var firstName, lastName, userEmail string
+	var userTickets uint // uint - unsigned integer, only contains positive numbers. A user can't buy -1 nos tickets
+
+	fmt.Println("\nEnter First name")
+	fmt.Scanf("%s\n", &firstName)
+
+	fmt.Println("Enter Last name")
+	fmt.Scanf("%s\n", &lastName)
+
+	fmt.Println("Enter email address")
+	fmt.Scanf("%s\n", &userEmail)
+
+	fmt.Println("Enter number of tickets you want to book")
+	fmt.Scanf("%d\n", &userTickets)
+
+	return firstName, lastName, userEmail, userTickets
+}
+
+func bookTicket(remaingTickets uint, userTickets uint, attendee string, attendees []string, userEmail string) {
+	// calculate remaining tickets after user booking
+	remaingTickets -= userTickets
+
+	fmt.Printf("Thank you %s for booking %d tickets. You will receive a notification email at %s", attendee, userTickets, userEmail)
+	fmt.Printf("\nNumber of Tickets Available are %d", remaingTickets)
 }
