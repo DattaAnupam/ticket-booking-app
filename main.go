@@ -34,29 +34,34 @@ func main() {
 		fmt.Println("Enter number of tickets you want to book")
 		fmt.Scanf("%d\n", &userTickets)
 
-		// calculate remaining tickets after user booking
-		remaingTickets -= userTickets
+		// check remaining tickets are sufficiant
+		if userTickets <= remaingTickets {
+			// calculate remaining tickets after user booking
+			remaingTickets -= userTickets
 
-		attendee = firstName + " " + lastName
-		attendees = append(attendees, attendee)
+			attendee = firstName + " " + lastName
+			attendees = append(attendees, attendee)
 
-		fmt.Printf("Thank you %s for booking %d tickets. You will receive a notification email at %s", attendee, userTickets, userEmail)
+			fmt.Printf("Thank you %s for booking %d tickets. You will receive a notification email at %s", attendee, userTickets, userEmail)
 
-		fmt.Printf("\nNumber of Tickets Available are %d", remaingTickets)
+			fmt.Printf("\nNumber of Tickets Available are %d", remaingTickets)
 
-		// use of for-each loop
-		firstNames := []string{}
-		for _, attendee := range attendees {
-			var names = strings.Fields(attendee) // spliting the full name from blank space
-			firstNames = append(firstNames, names[0])
-		}
-		fmt.Printf("\nThe first names of attendees are : %v", firstNames)
+			// use of for-each loop
+			firstNames := []string{}
+			for _, attendee := range attendees {
+				var names = strings.Fields(attendee) // spliting the full name from blank space
+				firstNames = append(firstNames, names[0])
+			}
+			fmt.Printf("\nThe first names of attendees are : %v", firstNames)
 
-		// check whether we ran out of tickets
-		if remaingTickets == 0 {
-			// end program
-			fmt.Println("Our conference is booked out. Come back next year...")
-			break
+			// check whether we ran out of tickets
+			if remaingTickets == 0 {
+				// end program
+				fmt.Println("\nOur conference is booked out. Come back next year...")
+				break
+			}
+		} else {
+			fmt.Printf("\nSorry, we only have %d nos of tickets remain, you can't book %d nos of tickets", remaingTickets, userTickets)
 		}
 	}
 }
