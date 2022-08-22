@@ -16,9 +16,7 @@ func main() {
 	// Another way of declaring variable, not applicable for const
 	attendees := []string{}
 
-	fmt.Printf("Welcome to our %s booking application\n", conferenceName)
-	fmt.Printf("We have total of %d tickets and %d tickets are available\n", noOfTickets, remaingTickets)
-	fmt.Println("Get your tickets here to attend")
+	greetUser(conferenceName, noOfTickets, remaingTickets)
 
 	for {
 		// take user input
@@ -78,4 +76,11 @@ func main() {
 			}
 		}
 	}
+}
+
+// Greets user with conference name, total no of tickets and remaining tickets for the conference
+func greetUser(conferenceName string, noOfTickets int, remaingTickets uint) {
+	fmt.Printf("Welcome to our %s booking application\n", conferenceName)
+	fmt.Printf("We have total of %d tickets and %d tickets are available\n", noOfTickets, remaingTickets)
+	fmt.Println("Get your tickets here to attend")
 }
