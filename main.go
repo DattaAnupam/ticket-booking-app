@@ -34,8 +34,15 @@ func main() {
 		fmt.Println("Enter number of tickets you want to book")
 		fmt.Scanf("%d\n", &userTickets)
 
-		// check remaining tickets are sufficiant
-		if userTickets <= remaingTickets {
+		// user input validation
+		// firstName & lastName should contain atleast  characters
+		isValidName := len(firstName) >= 2 && len(lastName) >= 2
+		// email should contain @ character
+		isValidEmail := strings.Contains(userEmail, "@")
+		// user should book atleast 1 ticket and it should be less remainTickets
+		isValidTicketNumber := userTickets > 0 && userTickets <= remaingTickets
+
+		if isValidName && isValidEmail && isValidTicketNumber {
 			// calculate remaining tickets after user booking
 			remaingTickets -= userTickets
 
@@ -43,7 +50,6 @@ func main() {
 			attendees = append(attendees, attendee)
 
 			fmt.Printf("Thank you %s for booking %d tickets. You will receive a notification email at %s", attendee, userTickets, userEmail)
-
 			fmt.Printf("\nNumber of Tickets Available are %d", remaingTickets)
 
 			// use of for-each loop
@@ -61,7 +67,15 @@ func main() {
 				break
 			}
 		} else {
-			fmt.Printf("\nSorry, we only have %d nos of tickets remain, you can't book %d nos of tickets", remaingTickets, userTickets)
+			if !isValidName {
+				fmt.Println("\nfirst name or last name you entered is too short...")
+			}
+			if !isValidEmail {
+				fmt.Println("A valid email should contain one and only one @ symbol")
+			}
+			if !isValidTicketNumber {
+				fmt.Printf("You have entered ticket count %d. We only have %d nos of tickets remaining...", userTickets, remaingTickets)
+			}
 		}
 	}
 }
