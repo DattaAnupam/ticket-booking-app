@@ -25,20 +25,20 @@ func main() {
 		// take user input
 		firstName, lastName, userEmail, userTickets := helper.GetUserInputs()
 
-		// user input validation
-		isValidName, isValidEmail, isValidTicketNumber := helper.ValidateUserInput(firstName, lastName, userEmail, userTickets, remaingTickets)
-
 		// create a map for a user
 		var userData = make(map[string]string)
 		userData["firstName"] = firstName
 		userData["lastName"] = lastName
-		userData["email"] = userEmail
+		userData["userEmail"] = userEmail
 		userData["userTickets"] = strconv.FormatUint(uint64(userTickets), 10) // convert uint to string
+
+		// user input validation
+		isValidName, isValidEmail, isValidTicketNumber := helper.ValidateUserInput(userData, remaingTickets)
 
 		if isValidName && isValidEmail && isValidTicketNumber {
 			attendee = userData["firstName"] + " " + userData["lastName"]
 			// call book tickets
-			bookTicket(userTickets, attendee, userEmail)
+			bookTicket(userData, attendee)
 
 			attendees = append(attendees, userData)
 
@@ -78,10 +78,11 @@ func printFirstNames() {
 	}
 }
 
-func bookTicket(userTickets uint, attendee string, userEmail string) {
+func bookTicket(userData map[string]string, attendee string) {
 	// calculate remaining tickets after user booking
-	remaingTickets -= userTickets
+	userTickets, _ := strconv.Atoi(userData["userTickets"])
+	remaingTickets -= uint(userTickets)
 
-	fmt.Printf("Thank you %s for booking %d tickets. You will receive a notification email at %s", attendee, userTickets, userEmail)
+	fmt.Printf("Thank you %s for booking %d tickets. You will receive a notification email at %s", attendee, userTickets, userData["userEmail"])
 	fmt.Printf("\nNumber of Tickets Available are %d", remaingTickets)
 }
