@@ -12,6 +12,12 @@ type UserData struct {
 	UserTickets uint
 }
 
+type ValidationTypes struct {
+	IsValidName         bool
+	IsValidEmail        bool
+	IsValidTicketNumber bool
+}
+
 // Greets user with conference name, total no of tickets and remaining tickets for the conference
 func GreetUser(conferenceName string, noOfTickets int, remaingTickets uint) {
 	fmt.Printf("Welcome to our %s booking application\n", conferenceName)
@@ -49,4 +55,16 @@ func GetUserInputs() (string, string, string, uint) {
 	fmt.Scanf("%d\n", &userTickets)
 
 	return firstName, lastName, userEmail, userTickets
+}
+
+func ShowValidationErrMsg(validationType ValidationTypes, userTickets uint, remaingTickets uint) {
+	if !validationType.IsValidName {
+		fmt.Println("\nfirst name or last name you entered is too short...")
+	}
+	if !validationType.IsValidEmail {
+		fmt.Println("A valid email should contain one and only one @ symbol")
+	}
+	if !validationType.IsValidTicketNumber {
+		fmt.Printf("You have entered ticket count %d. We only have %d nos of tickets remaining...", userTickets, remaingTickets)
+	}
 }
