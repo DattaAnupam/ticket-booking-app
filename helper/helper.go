@@ -2,9 +2,15 @@ package helper
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 )
+
+type UserData struct {
+	FirstName   string
+	LastName    string
+	UserEmail   string
+	UserTickets uint
+}
 
 // Greets user with conference name, total no of tickets and remaining tickets for the conference
 func GreetUser(conferenceName string, noOfTickets int, remaingTickets uint) {
@@ -14,14 +20,13 @@ func GreetUser(conferenceName string, noOfTickets int, remaingTickets uint) {
 }
 
 // validates inputs from the user
-func ValidateUserInput(userData map[string]string, remaingTickets uint) (bool, bool, bool) {
+func ValidateUserInput(userData UserData, remaingTickets uint) (bool, bool, bool) {
 	// firstName & lastName should contain atleast  characters
-	isValidName := len(userData["firstName"]) >= 2 && len(userData["lastName"]) >= 2
+	isValidName := len(userData.FirstName) >= 2 && len(userData.LastName) >= 2
 	// email should contain @ character
-	isValidEmail := strings.Contains(userData["userEmail"], "@")
+	isValidEmail := strings.Contains(userData.UserEmail, "@")
 	// user should book atleast 1 ticket and it should be less remainTickets
-	userTickets, _ := strconv.Atoi(userData["userTickets"])
-	isValidTicketNumber := userTickets > 0 && uint(userTickets) <= remaingTickets
+	isValidTicketNumber := userData.UserTickets > 0 && userData.UserTickets <= remaingTickets
 
 	return isValidName, isValidEmail, isValidTicketNumber
 }

@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"main/helper"
-	"strconv"
 )
 
 const noOfTickets int = 50
@@ -12,7 +11,7 @@ var conferenceName = "Go Conference"
 var remaingTickets uint = 50 // uint - unsigned integer, only contains positive numbers. remaining tickets can't go beyond 0
 // var attendees []string
 // Another way of declaring variable, not applicable for const
-var attendees = make([]map[string]string, 0)
+var attendees = []helper.UserData{}
 
 func main() {
 
@@ -25,18 +24,18 @@ func main() {
 		// take user input
 		firstName, lastName, userEmail, userTickets := helper.GetUserInputs()
 
-		// create a map for a user
-		var userData = make(map[string]string)
-		userData["firstName"] = firstName
-		userData["lastName"] = lastName
-		userData["userEmail"] = userEmail
-		userData["userTickets"] = strconv.FormatUint(uint64(userTickets), 10) // convert uint to string
-
+		// create a struct for a user
+		var userData = helper.UserData{
+			FirstName:   firstName,
+			LastName:    lastName,
+			UserEmail:   userEmail,
+			UserTickets: userTickets,
+		}
 		// user input validation
 		isValidName, isValidEmail, isValidTicketNumber := helper.ValidateUserInput(userData, remaingTickets)
 
 		if isValidName && isValidEmail && isValidTicketNumber {
-			attendee = userData["firstName"] + " " + userData["lastName"]
+			attendee = userData.FirstName + " " + userData.LastName
 			// call book tickets
 			bookTicket(userData, attendee)
 
@@ -70,7 +69,7 @@ func printFirstNames() {
 	// use of for-each loop
 	firstNames := []string{}
 	for _, attendee := range attendees {
-		firstNames = append(firstNames, attendee["firstName"])
+		firstNames = append(firstNames, attendee.FirstName)
 	}
 	fmt.Print("\nThe first names of attendees are :")
 	for _, fName := range firstNames {
@@ -78,11 +77,10 @@ func printFirstNames() {
 	}
 }
 
-func bookTicket(userData map[string]string, attendee string) {
+func bookTicket(userData helper.UserData, attendee string) {
 	// calculate remaining tickets after user booking
-	userTickets, _ := strconv.Atoi(userData["userTickets"])
-	remaingTickets -= uint(userTickets)
+	remaingTickets -= userData.UserTickets
 
-	fmt.Printf("Thank you %s for booking %d tickets. You will receive a notification email at %s", attendee, userTickets, userData["userEmail"])
+	fmt.Printf("Thank you %s for booking %d tickets. You will receive a notification email at %s", attendee, userData.UserTickets, userData.UserEmail)
 	fmt.Printf("\nNumber of Tickets Available are %d", remaingTickets)
 }
