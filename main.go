@@ -31,8 +31,16 @@ func main() {
 			UserEmail:   userEmail,
 			UserTickets: userTickets,
 		}
+
 		// user input validation
 		isValidName, isValidEmail, isValidTicketNumber := helper.ValidateUserInput(userData, remaingTickets)
+
+		// create a struct for validation types
+		var validationTypes = helper.ValidationTypes{
+			IsValidName:         isValidName,
+			IsValidEmail:        isValidEmail,
+			IsValidTicketNumber: isValidTicketNumber,
+		}
 
 		if isValidName && isValidEmail && isValidTicketNumber {
 			attendee = userData.FirstName + " " + userData.LastName
@@ -51,15 +59,7 @@ func main() {
 				break
 			}
 		} else {
-			if !isValidName {
-				fmt.Println("\nfirst name or last name you entered is too short...")
-			}
-			if !isValidEmail {
-				fmt.Println("A valid email should contain one and only one @ symbol")
-			}
-			if !isValidTicketNumber {
-				fmt.Printf("You have entered ticket count %d. We only have %d nos of tickets remaining...", userTickets, remaingTickets)
-			}
+			helper.ShowValidationErrMsg(validationTypes, userData.UserTickets, remaingTickets)
 		}
 	}
 }
