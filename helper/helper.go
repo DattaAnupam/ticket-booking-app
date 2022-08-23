@@ -2,6 +2,7 @@ package helper
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -13,13 +14,14 @@ func GreetUser(conferenceName string, noOfTickets int, remaingTickets uint) {
 }
 
 // validates inputs from the user
-func ValidateUserInput(firstName string, lastName string, userEmail string, userTickets uint, remaingTickets uint) (bool, bool, bool) {
+func ValidateUserInput(userData map[string]string, remaingTickets uint) (bool, bool, bool) {
 	// firstName & lastName should contain atleast  characters
-	isValidName := len(firstName) >= 2 && len(lastName) >= 2
+	isValidName := len(userData["firstName"]) >= 2 && len(userData["lastName"]) >= 2
 	// email should contain @ character
-	isValidEmail := strings.Contains(userEmail, "@")
+	isValidEmail := strings.Contains(userData["userEmail"], "@")
 	// user should book atleast 1 ticket and it should be less remainTickets
-	isValidTicketNumber := userTickets > 0 && userTickets <= remaingTickets
+	userTickets, _ := strconv.Atoi(userData["userTickets"])
+	isValidTicketNumber := userTickets > 0 && uint(userTickets) <= remaingTickets
 
 	return isValidName, isValidEmail, isValidTicketNumber
 }
