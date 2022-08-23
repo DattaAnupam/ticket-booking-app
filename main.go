@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"main/helper"
-	"strings"
+	"strconv"
 )
 
 const noOfTickets int = 50
@@ -12,7 +12,7 @@ var conferenceName = "Go Conference"
 var remaingTickets uint = 50 // uint - unsigned integer, only contains positive numbers. remaining tickets can't go beyond 0
 // var attendees []string
 // Another way of declaring variable, not applicable for const
-var attendees = []string{}
+var attendees = make([]map[string]string, 0)
 
 func main() {
 
@@ -28,12 +28,19 @@ func main() {
 		// user input validation
 		isValidName, isValidEmail, isValidTicketNumber := helper.ValidateUserInput(firstName, lastName, userEmail, userTickets, remaingTickets)
 
+		// create a map for a user
+		var userData = make(map[string]string)
+		userData["firstName"] = firstName
+		userData["lastName"] = lastName
+		userData["email"] = userEmail
+		userData["userTickets"] = strconv.FormatUint(uint64(userTickets), 10) // convert uint to string
+
 		if isValidName && isValidEmail && isValidTicketNumber {
-			attendee = firstName + " " + lastName
+			attendee = userData["firstName"] + " " + userData["lastName"]
 			// call book tickets
 			bookTicket(userTickets, attendee, userEmail)
 
-			attendees = append(attendees, attendee)
+			attendees = append(attendees, userData)
 
 			// print first names of attendees
 			printFirstNames()
@@ -63,10 +70,12 @@ func printFirstNames() {
 	// use of for-each loop
 	firstNames := []string{}
 	for _, attendee := range attendees {
-		var names = strings.Fields(attendee) // spliting the full name from blank space
-		firstNames = append(firstNames, names[0])
+		firstNames = append(firstNames, attendee["firstName"])
 	}
-	fmt.Printf("\nThe first names of attendees are : %v", firstNames)
+	fmt.Print("\nThe first names of attendees are :")
+	for _, fName := range firstNames {
+		fmt.Printf("%s ", fName)
+	}
 }
 
 func bookTicket(userTickets uint, attendee string, userEmail string) {
