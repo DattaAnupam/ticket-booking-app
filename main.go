@@ -5,10 +5,14 @@ import (
 	"main/helper"
 )
 
-const noOfTickets int = 50
+// maximum conference tickets can be 255, as uint8 range: 0 - 255
+const noOfTickets uint8 = 50
 
 var conferenceName = "Go Conference"
-var remaingTickets uint = 50 // uint - unsigned integer, only contains positive numbers. remaining tickets can't go beyond 0
+
+// uint - unsigned integer, only contains positive numbers. remaining tickets can't go beyond 0
+var remaingTickets uint8 = 50
+
 // var attendees []string
 // Another way of declaring variable, not applicable for const
 var attendees = []helper.UserData{}
