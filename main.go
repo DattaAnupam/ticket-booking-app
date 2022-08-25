@@ -57,8 +57,8 @@ func main() {
 			printFirstNames()
 
 			// check whether we ran out of tickets
+			// end program
 			if remaingTickets == 0 {
-				// end program
 				fmt.Println("\nOur conference is booked out. Come back next year...")
 				break
 			}
